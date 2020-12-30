@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+	  <script type="text/javascript" src="jquery/jquery.min.css"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" type="text/css" href="style/style.css">
+	  <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.min.css">
+</head>
+<body>
+ 
+	<form class="form-horizontal" name="myform" id="registername"onsubmit="myFunction()" method="post">
+	    <div class="container">
+	        <div class="form-group">	   
+	            <div class="col-sm-5">
+	    	    <br>
+		        <label for="first name">First Name:</label>          
+		        <input type="first name" class="form-control" id="fname" placeholder="**enter first name.." autocomplete="off">
+		        <p id="ferror"></p>	        
+		        <br>
+		        <label for="last name">Last Name:</label>
+		        <input type="last name" class="form-control" id="lname" placeholder="**enter last name.." autocomplete="off">
+		        <p id="lerror"></p>		        
+		        <label for="Email">Email:</label>
+		        <input type="Email" class="form-control" id="email" placeholder="** enter Email..">	
+		        <p id="eerror"></p>
+		        <br>
+		        <div>   
+		        <label for="Password">Password:</label>
+		        <input type="password" class="form-control" id="password" name="pwd" placeholder="**enter password..">
+		        <i class= "fa fa-eye" aria="hidden" id="show_hide"></i><br>
+		        </div>
+		        <p id="pwd-error"></p>		        
+		        
+		        <div>
+		        <label for="Password">confirm Password:</label>
+		        <input type="password" class="form-control" id="c-password" name="c-pwd" placeholder="**enter confirm password.."> 
+		        <p id="c-error"></p>  
+		        </div> 
+		        <div class="checkbox" id="checkbox">
+		        <label><input type="checkbox" name="remember me"> Remember Me</label>
+		        <br><br>
+		        </div>		   
+                <div class="radio">
+            	<div class="gender" id="gender"><b>Gender:</b>
+            	<label><input type="radio" name="optradio"checked>Male</label>
+            	<label><input type="radio" name="optradio">Female</label>
+            	<label><input type="radio" name="optradio">Rather</label>
+            	<br><br>
+                </div>
+            </div>
+                <lable for="file-upload"><b>file upload:</b></lable>
+               <div class="thumbnail">
+                <div class="form-grp">
+                	<div class="caption">
+                    <button type="button" class="btn btn-primary" id="btn-upload">Upload Image</button>
+                  <div id="uperror"></div>
+                  <div id="upsucc"></div>
+                <input type="file" name="file" id="file" style="visibility: hidden; display:flex;"  onchange="imagepreview(this);" accept="">
+               <img id="imgpreview" alt=".No Img Select.."></br>
+                <div id="imgsize"></div>
+                </div>
+            </div>
+        </div>
+            
+		        <div>
+		        	<button type="submit" class="btn btn-success" id="submit"><b>LOGIN</b></button>
+		        </div>
+		        <br> 
+		        </div>  
+		       </div>
+            </div>  
+	</form>
+    <script type="text/javaecript"></script>
+    <script>
+    	function imagepreview(input){
+    		
+        console.log(input.files[0])       
+            if(input.files && input.files[0]){
+                //if(input.files[0].size <= 1000200){ 
+                var ext = $("#file").val().split(".").pop();
+                if($.inArray(ext,["pdf","gif","html"])==-1){              	              
+                var filerd  = new FileReader();
+                filerd.onload = function(e){
+                $("#imgpreview").attr("src", e.target.result);
+                                                       
+            }; }                                                    
+                else{
+                   // alert('your image too large.');
+                   alert("only Allowed file 'jpg','jpeg' and 'png' ");                           
+               }
+                filerd.readAsDataURL(input.files[0]); 
+           }
+       };
+         
+  </script>
+  <script>
+      $(".btn.btn-primary").bind("click",function(){
+      $("#file").click();
+
+      });
+       
+</script> 
+   <script>
+   	function myFunction(){
+   	}
+    	$(myFunction()).ready(function(){
+    	  $("#show_hide").on("click",function(){
+          $("#eye").on("#password");
+              var passwordfield =$("#password");               
+              var passwordfieldtype=passwordfield.attr("type");
+                if(passwordfieldtype=="password")
+                  {
+                  passwordfield.attr("type","text");
+                  $(this).text("");
+                  }
+                  else{
+                  passwordfield.attr("type","password");
+                  $(this).text("");
+                  }
+                  });
+            $("#ferror").hide();
+            $("#eerror").hide();
+            $("#pwd-error").hide();
+            $("#c-error").hide();
+
+                var f_error = true;
+                var e_error = true;
+                var p_error = true;
+                var c_error = true;
+                
+            $("#fname").keyup(function(){
+
+                fname_check();
+            });
+               
+            function fname_check(){
+                var name_val =$("#fname").val();
+                if(name_val ==""){
+                  $("#ferror").show();
+                  $("#fname").css("border","2px solid red");
+                  $("#ferror").html("<p class='alert alert-danger'><b>**please enter the first name!!</b>"+" "+"<i class='fa fa-times' aria-hidden='true'></i></p>");    
+                  $("#ferror").focus(); 
+                  //$("#submit").attr("disabled",true);
+                  f_error = false;
+                  return false;
+                }
+                else{                 
+                  $("#ferror").hide();                                 
+                }
+                if((name_val.length<=3)||(name_val.length>=10)){
+                   $("#ferror").show();
+                   $("#fname").css("border","2px solid red");
+                   $("#ferror").html("<p class='alert alert-danger '><b>**please enter tha character between 3 to 10</b></p>");           
+                   $("#ferror").focus();                  
+                   $("#submit").attr("disabled",true);
+                   f_error = false;
+                   return false;
+                }
+                else{
+                   $("#ferror").show();
+                   $("#ferror").html("<p class='alert alert-success'><b> correct Name!"+" "+"<i class='fa fa-check' aria-hidden='true'></b></i>");  
+                   $("#fname").css("border","2px solid green");                
+                   $("#submit").attr("disabled",false);
+                }          
+            }
+              $("#lname").keyup(function(){
+                lname_check();
+            });
+               
+            function lname_check(){
+
+                var lname_val =$("#lname").val();
+                if(lname_val ==""){
+                  $("#lerror").show();
+                  $("#lname").css("border","2px solid red");
+                  $("#lerror").html("<p class='alert alert-danger'><b>**please enter last name!!</b>"+" "+"<i class='fa fa-times' aria-hidden='true'></i></p>");
+                  $("#submit").attr("disabled",true);                                  
+                  $("#lerror").focus();                                    
+                  f_error = false;
+                  return false;
+                }
+                else{
+                  $("#lerror").hide();                                  
+                }
+                if((lname_val.length<=3)||(lname_val.length>=10)){
+                   $("#lerror").show();
+                   $("#lname").css("border","2px solid red");
+                   $("#lerror").html("<p class='alert alert-danger'><b>**please enter tha character between 3 to 10</b></p>");
+                   $("#lerror").focus();
+                   $("#submit").attr("disabled",true);
+                   f_error = false;
+                   return false;
+                }
+                else{
+                	$("#lname").css("border","2px solid green");
+                   $("#lerror").show();
+                   $("#lerror").html("<p class='alert alert-success'></b><b> correct Name!</b>"+" "+"<i class='fa fa-check' aria-hidden='true'></i></b></p>");
+                   $("#submit").attr("disabled",false);
+                }          
+            }
+                $("#email").keyup(function(){
+                     email_check();
+                 });
+             function email_check(){
+                var email =$("#email").val();               
+                if(email==""){
+                    $("#eerror").show();
+                    $("#eerror").html("<p class='alert alert-danger'>**please enter the email!!"+" "+"<i class='fa fa-times' aria-hidden='true'></i></p>");   
+                    $("#email").css("border","2px solid red");                                  
+                    $("#eerror").css("color","red");
+                    $("#submit").attr("disabled",true);                                       
+                    e_error = false;
+                    return false;
+                }
+                else{
+                    var pattern_email=/^[a-zA-Z0-9.%_-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,10}$/;
+                    if(!pattern_email.test(email)){                     
+                     $("#eerror").show();                
+                     $("#email").css("border","2px solid #e8c87e");
+                     $("#eerror").html("<p class='alert alert-warning'><b>**please enter a valid email</b>"+" "+"<i class='fa fa-question-circle' aria-hidden='true'></i></b></p>");
+                     $("#submit").attr("disabled",true);
+                     e_error = false;
+                     return false;
+                    }else{
+                      $("#eerror").hide();
+                    }                                      
+                }
+                if((email.length<=9)||(email.length>=30)){
+                    $("#eerror").show();
+                    $("#eerror").html("**mail must be special character and 9 to 30!!");
+                    $("#eerror").focus();
+                    $("#eerror").css("color","red");
+                    $("#submit").attr("disabled",true);
+                    e_error = false;
+                    return false;
+                }
+                else{
+                    $("#eerror").show();    
+                    $("#email").css("border","2px solid green");                                 
+                    $("#eerror").html("<p class='alert alert-success'><b>** correct E-mail!</b>"+" "+"<i class='fa fa-check' aria-hidden='true'></i></p>");
+                    $("#submit").attr("disabled",false);
+                }                           
+              } 
+                    
+                $("#password").keyup(function(){
+                      password_check();
+
+            });
+
+
+            function password_check(){
+                  var pwd =$("#password").val();
+               if(pwd==""){
+                    $("#pwd-error").show();
+                    $("#pwd-error").html("<p class='alert alert-danger'><b>**please enter the password!!"+"  "+"<i class='fa fa-key' aria-hidden='true'</i></b></p>");
+                    $("#password").css("border","2px solid red");                               
+                    p_error = false;
+                    return false;
+                }
+                  else{
+                   	var pattern_password=/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+                    
+                    if(!pattern_password.test(pwd)){  
+                    	console.log('asdfdasdf')                   
+                     $("#pwd-error").show();
+                     $("#password").css("border","2px solid #e8c87e");
+                     $("#pwd-error").html("<p class='alert alert-warning'><b>**please enter a valid password!</b>"+"  "+"<i class='fa fa-key' aria-hidden='true'</i></p>");       
+                     $('#submit').attr('disabled',true);
+                      p_error = false;
+                      return false;
+                     }
+                    else
+                    {
+                      $("#pwd-error").hide();                      
+                      $("#submit").attr('disabled',true);                      
+                    }
+                   // return true
+                } 
+                  if((pwd.length<=7)||(pwd.length>=20)){
+                    $("#pwd-error").show();
+                    $("#pwd-error").html("** character atless between 8 to 25");
+                    $("#pwd-error").html("<p class='alert alert-danger'><b>**enter the character atless 8 !</b>"+"  "+"<i class='fa fa-key' aria-hidden='true'</i></p>"); 
+                    $("#pwd-error").focus();
+                    $("#pwd-error").css("color","red");
+                    $("#submit").attr("disabled",true);
+                    p_error = false;
+                    return false;
+                }
+                  else{
+                   $("#pwd-error").show();
+                   $("#pwd-error").html("<p class='alert alert-success'><b>** Enter password successful</b>"+"  "+"<i class='fa fa-check' aria='hidden'></i></p>");
+                   $("#password").css("border","2px solid green");
+                   $("#submit").attr("disabled",false);
+                }          
+            }                 
+                    $("#c-password").keyup(function(){
+                      c_password();
+                 });
+            function c_password(){
+                    var pwd =$("#password").val(); 
+                    var cpwd =$("#c-password").val(); 
+                    // confirm(cpwd);
+                  if(cpwd!=pwd){
+                    $("#c-error").show();
+                    $("#c-password").css("border","solid red");
+                    $("#c-error").html("<p class='alert alert-danger'><b>**  password are not matched</b>"+"  "+"<i class='fa fa-times' aria='hidden'></i></p>"); 
+                    $("#submit").attr("disabled",true);          
+                    c_error= false;
+                    return false;
+                    }
+                    else{
+                    $("#c-error").show();
+                    $("#c-error").html("<p class='alert alert-success'><b>**  password matched</b>"+"  "+"<i class='fa fa-check' aria='hidden'></i></p>");
+                    $("#c-password").css("border","2px solid green");
+                    $("#c-error").css("color","green");  
+                    $("#submit").attr("disabled",false);               
+                      }         
+            }                
+                    var name_val =$("#fname").val();
+                    var lname_val =$("#lname").val();
+                    var email =$("#email").val();  
+                    var pwd =$("#password").val();
+                    var cpwd =$("#c-password").val();                                       
+                    if((name_val=="")&&(lname_val=="")&&(email=="")&&(pwd=="")&&(cpwd==""))
+                    {                                    
+                    //$("#submit").attr("disabled",true);
+                    //confirm("filled all the coloumn!!")
+                    return false;           	              	    
+            	}    
+            	    else
+                  {
+            			// $("#submit").attr("disabled",false);
+                  }                                             
+        });
+    </script>
+</body>
+</html>
